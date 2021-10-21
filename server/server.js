@@ -42,7 +42,7 @@ app.use(async (req, res, next) => {
 
 // Frontend: Gives the code at the end of our shortened link and increment click by 1
 // Returns object of that link instance
-app.get("/redirect/:code", async (req, res) => {
+app.get("/api/redirect/:code", async (req, res) => {
   const id = convert.encode(req.params.code);
   const object = {
     id: id,
@@ -61,7 +61,7 @@ app.get("/redirect/:code", async (req, res) => {
 // Frontend: Gives a body with the destination link
 // Inserts new database entry with that
 // Returns object with msg, new_id and shortenLink
-app.post("/shorten", async (req, res) => {
+app.post("/api/shorten", async (req, res) => {
   const id = count++;
   const object = {
     id: id,
@@ -76,7 +76,7 @@ app.post("/shorten", async (req, res) => {
   });
 });
 
-app.get('/totalLinks', async (req, res) =>{
+app.get('/api/totalLinks', async (req, res) =>{
   res.send({
     totalLinks: count
   });

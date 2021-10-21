@@ -60,7 +60,7 @@ class Home extends React.Component {
   // This function from React runs when the website is opened
   componentDidMount() {
     // Testing GET request
-    axios.get("/totalLinks").then((res) => {
+    axios.get("/api/totalLinks").then((res) => {
       this.setState({
         count: res.data.totalLinks,
       });
@@ -103,7 +103,7 @@ class Home extends React.Component {
     });
 
     axios
-      .post("/shorten", {
+      .post("/api/shorten", {
         key: value,
       })
       .then((res) => {

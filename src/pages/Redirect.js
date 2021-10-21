@@ -7,7 +7,7 @@ import { WEBSITE_URL } from '../constants';
 class Redirect extends React.Component {
   componentDidMount(){
     let destination = WEBSITE_URL;
-    axios.get('/redirect/' + this.props.match.params.id)
+    axios.get('/api/redirect/' + this.props.match.params.id)
     .then((res) => {
       if(res.data) 
         destination = res.data.destination
