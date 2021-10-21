@@ -15,8 +15,8 @@ const popContent = (
 );
 
 function limit(string) {
-  if (string.length > 15){
-    return string.substring(0,15) + "..."
+  if (string.length > 25){
+    return string.substring(0,25) + "..."
   }
   return string
 }
@@ -38,9 +38,11 @@ class Home extends React.Component {
       })
   }
   onSearch = (value) => {
-    this.setState({
-      someValue : value
-    })
+    value =
+      "https://" + value
+      this.setState({
+        someValue: value,
+      });
     
     axios.post('/testInput', {
       key: value
