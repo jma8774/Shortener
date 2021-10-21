@@ -1,6 +1,8 @@
-import {Button, Slider, Space, Upload, Popconfirm, Popover, Input,} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import "./App.css";
+import { Button, Slider, Space, Upload, Popconfirm, Popover, Search, Input} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import React from 'react';
+import './App.css';
 
 const popContent = (
   <div>
@@ -9,12 +11,18 @@ const popContent = (
   </div>
 );
 
-const { Search } = Input;
+class App extends React.Component {
+  // This function from React runs when the website is opened
+  componentDidMount() {
+    // Testing GET request
+    axios.get(`/test`)
+      .then(res => {
+        console.log("HI YOUR BACKEND GET IS HERE!", res.data)
+      })
+  }
 
-const onSearch = (value) => console.log(value);
-
-function App() {
-  return (
+  render() {
+    return (
     <div className="App">
       <br />
       <Space
@@ -47,17 +55,10 @@ function App() {
         </Popover>
 
         <Input placeholder="Basic usage" />
-
-        <Search
-          placeholder="input search text"
-          allowClear
-          enterButton="Search"
-          size="medium"
-          onSearch={onSearch}
-        />
       </Space>
     </div>
-  );
+    )
+  }
 }
 
 export default App;
