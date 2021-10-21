@@ -1,4 +1,4 @@
-import { Button, Slider, Space, Upload, Popconfirm, Popover, Input} from 'antd';
+import { Button, Slider, Space, Upload, Popconfirm, Popover, Input, List} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import React from 'react';
@@ -12,6 +12,9 @@ const popContent = (
     <p>Content</p>
   </div>
 );
+
+const data = [
+];
 
 
 class Home extends React.Component {
@@ -34,7 +37,7 @@ class Home extends React.Component {
     this.setState({
       someValue : value
     })
-    console.log(this.state.someValue)
+    data.push(value)
   };
 
 
@@ -83,9 +86,20 @@ class Home extends React.Component {
             enterButton="Shorten"
             size="medium"
             onSearch={this.onSearch}
+            style={{ width: "50%" }}
           />
-          {String(this.state.someValue) === "0" ? "" : this.state.someValue}
-          
+
+          <List
+            size="small"
+            header={<div>History</div>}
+            bordered
+            dataSource={data}
+            renderItem={(item) => (
+              <List.Item.Meta
+                title={item}
+              />
+            )}
+          />
         </Space>
       </div>
     );
