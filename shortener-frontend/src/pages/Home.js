@@ -1,10 +1,11 @@
-import { Button, Slider, Space, Upload, Popconfirm, Popover, Input, List} from 'antd';
+import { Button, Slider, Space, Upload, Popconfirm, Popover, Input, List, Typography} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import React from 'react';
 import '../App.css';
 
 const { Search } = Input;
+const { Text } = Typography;
 
 const popContent = (
   <div>
@@ -13,15 +14,19 @@ const popContent = (
   </div>
 );
 
-const data = [
-];
-
+function limit(string) {
+  if (string.length > 15){
+    return string.substring(0,15) + "..."
+  }
+  return string
+}
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      someValue: 0
+      someValue: 0,
+      data : []
     }
   }
   // This function from React runs when the website is opened
@@ -33,12 +38,21 @@ class Home extends React.Component {
       })
   }
   onSearch = (value) => {
-    console.log(value)
     this.setState({
       someValue : value
     })
-    data.push(value)
+    
+    axios.post('/testInput', {
+      key: value
+    })
+      .then(res => {
+        this.setState({
+          data : this.state.data.concat({destination:value, shorten: res.data.shortenLink})
+        })
+      })
+
   };
+
 
 
   render() {
@@ -91,13 +105,25 @@ class Home extends React.Component {
 
           <List
             size="small"
-            header={<div>History</div>}
+            //header={<div>History</div>}
             bordered
-            dataSource={data}
+            dataSource={this.state.data}
             renderItem={(item) => (
-              <List.Item.Meta
-                title={item}
-              />
+              <List.Item
+                actions={[
+                  <Button type="primary">Copy</Button>,
+                ]}
+              >
+                <div style={{ backgroundColor: "white", width: "100%" , display: "flex"}}>
+                  <Text strong style={{overflow: 'hidden', whiteSpace: "nowrap"}}>
+
+                  {limit(item.destination)}
+                  </Text>
+                  <Text strong style={{ marginLeft: "auto" }}>
+                    {item.shorten}
+                  </Text>
+                </div>
+              </List.Item>
             )}
           />
         </Space>
