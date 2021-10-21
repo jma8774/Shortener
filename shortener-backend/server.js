@@ -1,11 +1,11 @@
 // Set up .env file to hide our API key and stuff if anything
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const dbo = require('./db/conn');
-const convert = require('./converter');
-const morgan = require('morgan');
-const cors = require('cors');
+const express = require("express");
+const dbo = require("./db/conn");
+const convert = require("./converter");
+const morgan = require("morgan");
+const cors = require("cors");
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -17,8 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 // Middleware to debug requests
-app.use(morgan('tiny'))
-
+app.use(morgan("tiny"));
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -27,44 +26,36 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 let count = -1;
 
 // Function that executes on every request, checks if count is initialized, if not initialize it
-app.use( async (req, res, next) => {
-  if(count == -1) {
+app.use(async (req, res, next) => {
+  if (count == -1) {
     count = await dbo.getCount();
-    console.log("Updated count", count)
+    console.log("Updated count", count);
   }
-  next()
-})
-
-// MongoDB Insert One
-app.get('/testInsertOne', async (req, res) => {
-  const id = count++;
-  const object = {
-    id: id,
-    destination: "asdljskdaskldsjla.com",
-    clicks: 0
-  }
-  await dbo.insertOne(object)
-  res.send({ 
-    msg: "Successfully inserted 1",
-    new_id: id 
-  });
+  next();
 });
 
-// MongoDB Find One
-app.get('/testFindOne', async (req, res) => {
+// Frontend: Gives the code at the end of our shortened link and increment click by 1
+// Returns object of that link instance
+app.get("/redirect/:code", async (req, res) => {
+  const id = convert.encode(req.params.code);
   const object = {
-    id: 16
+    id: id,
+  };
+  const data = await dbo.findOne(object);
+  if (data !== null) {
+    await dbo.updateOne(object, {
+      $set: {
+        clicks: data.clicks + 1,
+      },
+    });
   }
-  const data = await dbo.findOne(object)
   res.json(data);
 });
 
-// Click function?
-
-// User Input
-app.post('/shorten', async (req, res)=>{
-  console.log(req.body.key)
-
+// Frontend: Gives a body with the destination link
+// Inserts new database entry with that
+// Returns object with msg, new_id and shortenLink
+app.post("/shorten", async (req, res) => {
   const id = count++;
   const object = {
     id: id,
@@ -75,14 +66,6 @@ app.post('/shorten', async (req, res)=>{
   res.send({
     msg: "Successfully inserted 1",
     new_id: id,
-    shortenLink: "http://localhost:3000/" + convert.decode(id)
+    shortenLink: "http://localhost:3000/" + convert.decode(id),
   });
-
-})
-
-//Total Links
-app.get('/testTotal', async (req, res) => {
-  //count = await dbo.getCount();
-  res.send({
-    totalLinks: count})
-})
+});
