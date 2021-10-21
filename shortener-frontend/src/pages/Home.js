@@ -24,6 +24,7 @@ class Home extends React.Component {
   render() {
     return (
     <div className="App">
+      {/* This is the url code {this.props.match.params.id} */}
       <br />
       <Space
         direction="vertical"
