@@ -79,3 +79,10 @@ app.post('/testInput', async (req, res)=>{
   });
 
 })
+
+//Total Links
+app.get('/testTotal', async (req, res) => {
+  //count = await dbo.getCount();
+  res.send({
+    totalLinks: count})
+})

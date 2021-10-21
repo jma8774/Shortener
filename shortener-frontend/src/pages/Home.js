@@ -41,6 +41,7 @@ class Home extends React.Component {
     this.state = {
       someValue: 0,
       data: [],
+      count : 0,
     };
   }
   // This function from React runs when the website is opened
@@ -49,8 +50,13 @@ class Home extends React.Component {
     axios.get(`/test`).then((res) => {
       console.log("HI YOUR BACKEND GET IS HERE!", res.data);
     });
+    axios.get('/testTotal').then((res) => {
+      this.setState({
+        count : res.data.totalLinks
+      })
+    })
   }
-  onSearch = (value) => {
+  EnterLink = (value) => {
     value = "https://" + value;
     this.setState({
       someValue: value,
@@ -66,6 +72,7 @@ class Home extends React.Component {
             destination: value,
             shorten: res.data.shortenLink,
           }),
+            count : this.state.count + 1
         });
       });
   };
@@ -114,7 +121,7 @@ class Home extends React.Component {
             allowClear
             enterButton="Shorten"
             size="medium"
-            onSearch={this.onSearch}
+            onSearch={this.EnterLink}
             style={{ width: "50%" }}
           />
 
@@ -151,7 +158,7 @@ class Home extends React.Component {
               <Card style={{ backgroundColor: "grey" }}>
                 <Statistic
                   title="Total Links Shortened"
-                  value= "15"
+                  value= {this.state.count}
                   //precision={2}
                   valueStyle={{ color: "#3f8600" }}
                   //prefix={<ArrowUpOutlined />}
