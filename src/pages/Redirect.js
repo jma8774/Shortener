@@ -6,12 +6,14 @@ import { WEBSITE_URL } from '../constants';
 
 class Redirect extends React.Component {
   componentDidMount(){
+    alert("HELLO U HERE")
     let destination = WEBSITE_URL;
+    alert(destination)
     axios.get('/api/redirect/' + this.props.match.params.id)
     .then((res) => {
       if(res.data) 
         destination = res.data.destination
-      window.location = destination;
+      window.location = 'https://www.google.com/';
     });
   }
 
