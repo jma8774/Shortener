@@ -35,36 +35,28 @@ app.use( async (req, res, next) => {
   next()
 })
 
-// MongoDB Insert One
-app.get('/testInsertOne', async (req, res) => {
-  const id = count++;
+// Frontend: Gives the code at the end of our shortened link and increment click by 1
+// Returns object of that link instance
+app.get('/redirect/:code', async (req, res) => {
+  const id = convert.encode(req.params.code)
   const object = {
-    id: id,
-    destination: "asdljskdaskldsjla.com",
-    clicks: 0
-  }
-  await dbo.insertOne(object)
-  res.send({ 
-    msg: "Successfully inserted 1",
-    new_id: id 
-  });
-});
-
-// MongoDB Find One
-app.get('/testFindOne', async (req, res) => {
-  const object = {
-    id: 16
+    id: id
   }
   const data = await dbo.findOne(object)
+  if(data !== null) {
+    await dbo.updateOne(object, {
+      $set: {
+        clicks: data.clicks + 1
+      }
+    })
+  }
   res.json(data);
 });
 
-// Click function?
-
-// User Input
-app.post('/testInput', async (req, res)=>{
-  console.log(req.body.key)
-
+// Frontend: Gives a body with the destination link
+// Inserts new database entry with that
+// Returns object with msg, new_id and shortenLink
+app.post('/shorten', async (req, res)=>{
   const id = count++;
   const object = {
     id: id,
@@ -77,5 +69,4 @@ app.post('/testInput', async (req, res)=>{
     new_id: id,
     shortenLink: "http://localhost:3000/" + convert.decode(id)
   });
-
 })
