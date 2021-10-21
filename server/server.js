@@ -2,6 +2,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const path = require("path")
 const dbo = require("./db/conn");
 const convert = require("./converter");
 const morgan = require("morgan");
@@ -21,6 +22,10 @@ app.use(morgan("tiny"));
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+// Needed for Heroku
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
 
 // This count will keep track of the number of items in our db, not initialized = -1
 let count = -1;
