@@ -18,7 +18,9 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React from "react";
 import "../App.css";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 const { Search } = Input;
 const { Text } = Typography;
 
@@ -39,12 +41,20 @@ function limit(string) {
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    const myCookies = cookies.getAll();
+    let data = [];
+    for (const key of Object.keys(myCookies)) {
+      data.push({
+        destination: myCookies[key],
+        shorten: key,
+      });
+    }
     this.state = {
-      data: [],
+      data: data,
       count: 0,
       error: false,
       loading: false,
-      copy: false
+      copy: false,
     };
   }
   // This function from React runs when the website is opened
@@ -63,7 +73,7 @@ class Home extends React.Component {
         error: true,
       });
       notification.destroy();
-      notification.open({
+      notification.warning({
         message: "Error Shortening Link",
         description: "Link was invalid",
         duration: 2,
@@ -73,11 +83,24 @@ class Home extends React.Component {
       this.setState({
         error: false,
       });
+      notification.destroy();
+      notification.success({
+        message: "Successfully Shortened",
+        description: "",
+        duration: 2,
+      });
     }
-    
+
+    if (
+      !String(value).startsWith("https://") &&
+      !String(value).startsWith("http://")
+    ) {
+      value = "http://" + value;
+    }
+
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
 
     axios
       .post("/shorten", {
@@ -91,14 +114,21 @@ class Home extends React.Component {
           }),
           count: this.state.count + 1,
           loading: false,
-          copy: true
+          copy: true,
         });
+        cookies.set(res.data.shortenLink, value);
       });
   };
 
   copyLink = (value) => {
-    navigator.clipboard.writeText(this.state.data.at(-1).shorten)
-  }
+    navigator.clipboard.writeText(this.state.data.at(-1).shorten);
+    notification.destroy();
+    notification.success({
+      message: "Successfully Copied",
+      description: "",
+      duration: 2,
+    });
+  };
 
   render() {
     return (
@@ -109,12 +139,12 @@ class Home extends React.Component {
           style={{ width: "75%", backgroundColor: "" }}
         >
           <Search
-            loading = {this.state.loading}
+            loading={this.state.loading}
             placeholder="Shorten your link"
             enterButton={this.state.copy ? "Copy" : "Shorten"}
             size="large"
             onSearch={this.state.copy ? this.copyLink : this.EnterLink}
-            onChange={() => this.setState({copy: false})}
+            onChange={() => this.setState({ copy: false })}
             style={{ width: "50%" }}
           />
 
@@ -124,7 +154,24 @@ class Home extends React.Component {
             bordered
             dataSource={this.state.data}
             renderItem={(item) => (
-              <List.Item actions={[<Button type="primary" onClick={() => {navigator.clipboard.writeText(item.shorten)}}>Copy</Button>]}>
+              <List.Item
+                actions={[
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      notification.destroy();
+                      notification.success({
+                        message: "Successfully Copied",
+                        description: "",
+                        duration: 2,
+                      });
+                      navigator.clipboard.writeText(item.shorten);
+                    }}
+                  >
+                    Copy
+                  </Button>,
+                ]}
+              >
                 <div
                   style={{
                     backgroundColor: "",
