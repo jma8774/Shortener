@@ -25,8 +25,18 @@ app.use(morgan("tiny"));
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 // Needed for Heroku
-const buildPath = path.join(__dirname, '..', 'build');
-app.use(express.static(buildPath));
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '..', 'build');
+  app.use(express.static(buildPath));
+  // all unknown routes should be handed to our react app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
+
+app.get('*', (request, response) => {
+	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 // This count will keep track of the number of items in our db, not initialized = -1
 let count = -1;
