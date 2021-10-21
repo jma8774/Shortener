@@ -3,8 +3,9 @@ require('dotenv').config();
 
 const express = require('express');
 const dbo = require('./db/conn');
-const morgan = require('morgan')
-const cors = require('cors')
+const convert = require('./converter');
+const morgan = require('morgan');
+const cors = require('cors');
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -18,27 +19,34 @@ app.use(cors());
 // Middleware to debug requests
 app.use(morgan('tiny'))
 
+
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-// Testing to see if backend works
-app.get('/test', (req, res) =>{
-  console.log("GET /test");
-  res.send({ express: "HI ITS YOUR BACKEND" });
+// This count will keep track of the number of items in our db, not initialized = -1
+let count = -1;
+
+// Function that executes on every request, checks if count is initialized, if not initialize it
+app.use( async (req, res, next) => {
+  if(count == -1) {
+    count = await dbo.getCount();
+    console.log("Updated count", count)
+  }
+  next()
 })
 
 // MongoDB Insert One
 app.get('/testInsertOne', async (req, res) => {
-  const count = await dbo.getCount();
+  const id = count++;
   const object = {
-    id: count,
+    id: id,
     destination: "asdljskdaskldsjla.com",
     clicks: 0
   }
   await dbo.insertOne(object)
   res.send({ 
     msg: "Successfully inserted 1",
-    new_id: count 
+    new_id: id 
   });
 });
 
@@ -57,17 +65,17 @@ app.get('/testFindOne', async (req, res) => {
 app.post('/testInput', async (req, res)=>{
   console.log(req.body.key)
 
-  const count = await dbo.getCount();
+  const id = count++;
   const object = {
-    id: count,
+    id: id,
     destination: req.body.key,
     clicks: 0,
   };
   await dbo.insertOne(object);
   res.send({
     msg: "Successfully inserted 1",
-    new_id: count,
-    shortenLink: "shorten/abc"
+    new_id: id,
+    shortenLink: "http://localhost:3000/" + convert.decode(id)
   });
 
 })
