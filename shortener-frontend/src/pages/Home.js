@@ -12,8 +12,9 @@ import {
   Card,
   Row,
   Col,
+  notification,
 } from "antd";
-import { UploadOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React from "react";
 import "../App.css";
@@ -41,7 +42,8 @@ class Home extends React.Component {
     this.state = {
       someValue: 0,
       data: [],
-      count : 0,
+      count: 0,
+      error: false,
     };
   }
   // This function from React runs when the website is opened
@@ -50,20 +52,34 @@ class Home extends React.Component {
     axios.get(`/test`).then((res) => {
       console.log("HI YOUR BACKEND GET IS HERE!", res.data);
     });
-    axios.get('/testTotal').then((res) => {
+    axios.get("/testTotal").then((res) => {
       this.setState({
-        count : res.data.totalLinks
-      })
-    })
+        count: res.data.totalLinks,
+      });
+    });
   }
   EnterLink = (value) => {
+    if (value.length < 1) {
+      this.setState({
+        error: true,
+      });
+      notification.warn({
+        message: "Error Shortening Link",
+        description: "Link was invalid",
+      });
+      return;
+    } else {
+      this.setState({
+        error: false,
+      });
+    }
     value = "https://" + value;
     this.setState({
       someValue: value,
     });
 
     axios
-      .post("/testInput", {
+      .post("/shorten", {
         key: value,
       })
       .then((res) => {
@@ -72,7 +88,7 @@ class Home extends React.Component {
             destination: value,
             shorten: res.data.shortenLink,
           }),
-            count : this.state.count + 1
+          count: this.state.count + 1,
         });
       });
   };
@@ -83,7 +99,7 @@ class Home extends React.Component {
         <br />
         <Space
           direction="vertical"
-          style={{ width: "75%", backgroundColor: "white" }}
+          style={{ width: "75%", backgroundColor: "" }}
         >
           {/* buttons with space */}
           <Space>
@@ -134,7 +150,7 @@ class Home extends React.Component {
               <List.Item actions={[<Button type="primary">Copy</Button>]}>
                 <div
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: "",
                     width: "100%",
                     display: "flex",
                   }}
@@ -155,19 +171,19 @@ class Home extends React.Component {
 
           <Row gutter={16}>
             <Col span={12}>
-              <Card style={{ backgroundColor: "grey" }}>
+              <Card style={{ backgroundColor: "" }}>
                 <Statistic
                   title="Total Links Shortened"
-                  value= {this.state.count}
+                  value={this.state.count}
                   //precision={2}
-                  valueStyle={{ color: "#3f8600" }}
+                  valueStyle={{ color: "#cf1322" }}
                   //prefix={<ArrowUpOutlined />}
                   //suffix="%"
                 />
               </Card>
             </Col>
             <Col span={12}>
-              <Card style={{ backgroundColor: "#add8e6" }}>
+              <Card style={{ backgroundColor: "" }}>
                 <Statistic
                   title="Top Clicked Link"
                   value="https://google.com"

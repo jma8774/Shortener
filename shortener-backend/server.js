@@ -62,7 +62,7 @@ app.get('/testFindOne', async (req, res) => {
 // Click function?
 
 // User Input
-app.post('/testInput', async (req, res)=>{
+app.post('/shorten', async (req, res)=>{
   console.log(req.body.key)
 
   const id = count++;
