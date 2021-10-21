@@ -52,7 +52,7 @@ class Home extends React.Component {
     axios.get(`/test`).then((res) => {
       console.log("HI YOUR BACKEND GET IS HERE!", res.data);
     });
-    axios.get("/testTotal").then((res) => {
+    axios.get("/totalLinks").then((res) => {
       this.setState({
         count: res.data.totalLinks,
       });
@@ -63,9 +63,11 @@ class Home extends React.Component {
       this.setState({
         error: true,
       });
-      notification.warn({
+      notification.destroy();
+      notification.open({
         message: "Error Shortening Link",
         description: "Link was invalid",
+        duration: 2,
       });
       return;
     } else {
@@ -73,7 +75,8 @@ class Home extends React.Component {
         error: false,
       });
     }
-    value = "https://" + value;
+   
+  
     this.setState({
       someValue: value,
     });
@@ -134,7 +137,6 @@ class Home extends React.Component {
 
           <Search
             placeholder="input search text"
-            allowClear
             enterButton="Shorten"
             size="medium"
             onSearch={this.EnterLink}
