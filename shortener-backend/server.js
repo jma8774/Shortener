@@ -69,3 +69,9 @@ app.post("/shorten", async (req, res) => {
     shortenLink: "http://localhost:3000/" + convert.decode(id),
   });
 });
+
+app.get('/totalLinks', async (req, res) =>{
+  res.send({
+    totalLinks: count
+  });
+});
