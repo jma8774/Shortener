@@ -40,24 +40,23 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      someValue: 0,
       data: [],
       count: 0,
       error: false,
+      loading: false,
+      copy: false
     };
   }
   // This function from React runs when the website is opened
   componentDidMount() {
     // Testing GET request
-    axios.get(`/test`).then((res) => {
-      console.log("HI YOUR BACKEND GET IS HERE!", res.data);
-    });
     axios.get("/totalLinks").then((res) => {
       this.setState({
         count: res.data.totalLinks,
       });
     });
   }
+
   EnterLink = (value) => {
     if (value.length < 1) {
       this.setState({
@@ -75,11 +74,10 @@ class Home extends React.Component {
         error: false,
       });
     }
-   
-  
+    
     this.setState({
-      someValue: value,
-    });
+      loading: true
+    })
 
     axios
       .post("/shorten", {
@@ -92,9 +90,15 @@ class Home extends React.Component {
             shorten: res.data.shortenLink,
           }),
           count: this.state.count + 1,
+          loading: false,
+          copy: true
         });
       });
   };
+
+  copyLink = (value) => {
+    navigator.clipboard.writeText(this.state.data.at(-1).shorten)
+  }
 
   render() {
     return (
@@ -104,42 +108,13 @@ class Home extends React.Component {
           direction="vertical"
           style={{ width: "75%", backgroundColor: "" }}
         >
-          {/* buttons with space */}
-          <Space>
-            <Button type="primary">Button</Button>
-            <Upload>
-              <Button>
-                <UploadOutlined /> Click to Upload
-              </Button>
-            </Upload>
-            <Popconfirm
-              title="Are you sure delete this task?"
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button>Confirm</Button>
-            </Popconfirm>
-          </Space>
-
-          {/* slider */}
-          <Slider
-            defaultValue={30}
-            disabled={false}
-            style={{ width: "100%" }}
-          />
-
-          {/* hover */}
-          <Popover content={popContent} title="Title">
-            <Button type="primary">Hover me</Button>
-          </Popover>
-
-          <Input placeholder="Basic usage" />
-
           <Search
-            placeholder="input search text"
-            enterButton="Shorten"
-            size="medium"
-            onSearch={this.EnterLink}
+            loading = {this.state.loading}
+            placeholder="Shorten your link"
+            enterButton={this.state.copy ? "Copy" : "Shorten"}
+            size="large"
+            onSearch={this.state.copy ? this.copyLink : this.EnterLink}
+            onChange={() => this.setState({copy: false})}
             style={{ width: "50%" }}
           />
 
@@ -149,7 +124,7 @@ class Home extends React.Component {
             bordered
             dataSource={this.state.data}
             renderItem={(item) => (
-              <List.Item actions={[<Button type="primary">Copy</Button>]}>
+              <List.Item actions={[<Button type="primary" onClick={() => {navigator.clipboard.writeText(item.shorten)}}>Copy</Button>]}>
                 <div
                   style={{
                     backgroundColor: "",
