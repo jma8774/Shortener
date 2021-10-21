@@ -1,14 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from "axios";
 import '../App.css';
 
 
 class Redirect extends React.Component {
   componentDidMount(){
-    console.log(this.props.match.params.id)
-    // BACKEND SHIT
-    let destination = 'http://reddit.com'
-    window.location = destination;
+    let destination = 'http://localhost:3000'
+    axios.get('/redirect/' + this.props.match.params.id)
+    .then((res) => {
+      if(res.data) 
+        destination = res.data.destination
+      window.location = destination;
+    });
   }
 
   render() {

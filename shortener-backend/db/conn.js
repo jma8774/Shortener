@@ -6,7 +6,7 @@ client.connect()
 
 const linksCollection = client.db('shortener').collection('links')
 
-async function getCount(collection){
+async function getCount(){
   let count;
   try {
     count = await linksCollection.count();
@@ -34,6 +34,14 @@ async function findOne(object){
   }
 }
 
+async function updateOne(item, newValues) {
+  try {
+    await linksCollection.updateOne(item, newValues);
+    console.log("Successfully updated 1");
+  } catch (e) {
+    console.log(e)
+  }
+}
 // Update function needed
 
-module.exports = {getCount, insertOne, findOne};
+module.exports = {getCount, insertOne, findOne, updateOne};
