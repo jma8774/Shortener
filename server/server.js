@@ -7,6 +7,7 @@ const dbo = require("./db/conn");
 const convert = require("./converter");
 const morgan = require("morgan");
 const cors = require("cors");
+const WEBSITE_URL = require("../src/constants").WEBSITE_URL
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -71,7 +72,7 @@ app.post("/shorten", async (req, res) => {
   res.send({
     msg: "Successfully inserted 1",
     new_id: id,
-    shortenLink: "http://localhost:3000/" + convert.decode(id),
+    shortenLink: WEBSITE_URL + convert.decode(id),
   });
 });
 
