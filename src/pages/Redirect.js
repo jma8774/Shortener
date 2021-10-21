@@ -11,8 +11,10 @@ class Redirect extends React.Component {
     alert(destination)
     axios.get('/api/redirect/' + this.props.match.params.id)
     .then((res) => {
-      if(res.data) 
+      if(res.data) {
         destination = res.data.destination
+        alert(destination)
+      }
       window.location = 'https://www.google.com/';
     });
   }

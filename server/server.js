@@ -34,10 +34,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
 // This count will keep track of the number of items in our db, not initialized = -1
 let count = -1;
 
