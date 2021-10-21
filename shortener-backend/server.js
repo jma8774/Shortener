@@ -39,7 +39,7 @@ app.get('/testInsertOne', async (req, res) => {
 // MongoDB Find One
 app.get('/testFindOne', async (req, res) => {
   const object = {
-    id: 5
+    id: 0
   }
   const data = await dbo.findOne(object)
   res.json(data);
