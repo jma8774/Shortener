@@ -13,6 +13,8 @@ class Redirect extends React.Component {
     .then((res) => {
       if(res.data) {
         destination = res.data.destination
+        console.log(res)
+        console.log(res.data)
         alert(destination)
       }
       window.location = 'https://www.google.com/';

@@ -61,6 +61,7 @@ class Home extends React.Component {
   componentDidMount() {
     // Testing GET request
     axios.get("/api/totalLinks").then((res) => {
+      console.log(res)
       this.setState({
         count: res.data.totalLinks,
       });
