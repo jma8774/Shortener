@@ -8,7 +8,6 @@ import {
   Layout,
   Menu,
   Typography,
-  Divider,
 } from "antd";
 import axios from "axios";
 import React from "react";
@@ -164,7 +163,9 @@ class Home extends React.Component {
           style={{ marginTop: "30px", marginBottom: "30px" }}
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
-            <div className="titleText">Smallify</div>
+            <div className="brandText">
+              Smallify
+            </div>
             <div className="paragraphText">
               If you're looking for a link shortener, you've come to the right
               place. We've shortened a total of
@@ -212,6 +213,7 @@ class Home extends React.Component {
 
               <Input
                 style={{ borderRadius: "5px 0px 0px 5px" }}
+                size="large"
                 placeholder="Shorten your link"
                 onChange={(e) => {
                   this.setState({
@@ -219,12 +221,14 @@ class Home extends React.Component {
                     copy: false,
                   });
                 }}
+                onPressEnter={this.state.copy ? this.copyLink : this.EnterLink}
               />
             </Col>
 
             <Col xs={6} sm={4} md={4} lg={3} xl={2} xxl={2}>
               <Button
                 style={{ borderRadius: "0px 5px 5px 0px" }}
+                size="large"
                 block
                 type="primary"
                 onClick={this.state.copy ? this.copyLink : this.EnterLink}

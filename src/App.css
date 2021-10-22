@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.titleText {
+.brandText {
   text-align: left;
   font-size: 60px;
   font-weight: bold;
@@ -22,9 +22,15 @@
   color: #54545c;
 }
 
+.titleText {
+  text-align: left;
+  font-size: 40px;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 750px) {
   /* styles for browsers lower than 750px; */
-  .titleText {
+  .brandText {
     font-size: 50px;
 
   }
