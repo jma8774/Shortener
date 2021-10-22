@@ -213,7 +213,7 @@ class Home extends React.Component {
 
               <Input
                 style={{ borderRadius: "5px 0px 0px 5px" }}
-                size="large"
+                size={isMobile() ? "medium" : "large"}
                 placeholder="Shorten your link"
                 onChange={(e) => {
                   this.setState({
@@ -228,9 +228,10 @@ class Home extends React.Component {
             <Col xs={6} sm={4} md={4} lg={3} xl={2} xxl={2}>
               <Button
                 style={{ borderRadius: "0px 5px 5px 0px" }}
-                size="large"
+                size={isMobile() ? "medium" : "large"}
                 block
                 type="primary"
+                loading={this.state.loading}
                 onClick={this.state.copy ? this.copyLink : this.EnterLink}
               >
                 {this.state.copy ? (this.state.copied ? "Copied" : "Copy") : "Shorten"}
