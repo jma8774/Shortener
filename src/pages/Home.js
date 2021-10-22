@@ -8,7 +8,7 @@ import {
   Layout,
   Menu,
   Typography,
-  Divider
+  Divider,
 } from "antd";
 import axios from "axios";
 import React from "react";
@@ -43,7 +43,9 @@ class Home extends React.Component {
       error: false,
       loading: false,
       copy: false,
+      copied: false,
       animateCount: false,
+      input: "",
     };
   }
 
@@ -56,18 +58,20 @@ class Home extends React.Component {
           count: res.data.totalLinks,
         });
       });
-    }
-    updateCount()
-    const countUpdateInterval = setInterval(updateCount, 5000)
-    this.setState({countUpdateInterval: countUpdateInterval})
-  }
-  
-  // This function runs when React dies
-  componentWillUnmount() {
-    clearInterval(this.state.countUpdateInterval)
+    };
+    updateCount();
+    const countUpdateInterval = setInterval(updateCount, 5000);
+    this.setState({ countUpdateInterval: countUpdateInterval });
   }
 
-  EnterLink = (value) => {
+  // This function runs when React dies
+  componentWillUnmount() {
+    clearInterval(this.state.countUpdateInterval);
+  }
+
+  EnterLink = () => {
+    let value = this.state.input;
+    console.log(value);
     if (value.length < 1) {
       this.setState({
         error: true,
@@ -118,9 +122,8 @@ class Home extends React.Component {
           copy: true,
           animateCount: true,
         });
-        setTimeout(() => this.setState({animateCount: false}), 800);
+        setTimeout(() => this.setState({ animateCount: false }), 800);
         cookies.set(res.data.shortenLink, value);
-        
       });
   };
 
@@ -132,7 +135,11 @@ class Home extends React.Component {
       description: "",
       duration: 2,
     });
+    this.setState({
+      copied: true
+    })
   };
+  
 
   render() {
     return (
@@ -157,19 +164,32 @@ class Home extends React.Component {
           style={{ marginTop: "30px", marginBottom: "30px" }}
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
-            <div className="titleText">
-              Smallify
-            </div>
+            <div className="titleText">Smallify</div>
             <div className="paragraphText">
-              If you're looking for a link shortener, you've come to the right place. We've shortened a total of
-              { this.state.animateCount
-              ? <div className="animateCount" style={{color: '#6ccc34', display: 'inline-block'}}>&nbsp;+1&nbsp;</div> 
-              : <span style={{color: '#1890ff'}}> {this.state.count} </span> 
-              }
+              If you're looking for a link shortener, you've come to the right
+              place. We've shortened a total of
+              {this.state.animateCount ? (
+                <div
+                  className="animateCount"
+                  style={{ color: "#6ccc34", display: "inline-block" }}
+                >
+                  &nbsp;+1&nbsp;
+                </div>
+              ) : (
+                <span style={{ color: "#1890ff" }}> {this.state.count} </span>
+              )}
               links!
             </div>
           </Col>
-          <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={8} style={{marginTop: "50px", marginBottom: "25px"}}>
+          <Col
+            xs={22}
+            sm={16}
+            md={16}
+            lg={10}
+            xl={10}
+            xxl={8}
+            style={{ marginTop: "50px", marginBottom: "25px" }}
+          >
             <img
               src="/CoverPicture3.svg"
               height="auto"
@@ -178,68 +198,84 @@ class Home extends React.Component {
             ></img>
           </Col>
         </Row>
-        <div style={{backgroundColor:'#04142c'}}>
-        <Row
-          justify="center"
-          style={{ paddingTop: "30px", paddingBottom: "30px", marginBottom: '30px'}}
-        >
-          <Col xs={23} sm={20} md={16} lg={16} xl={12} xxl={8}>
-            {/* <Text keyboard>Total Links Shortened : {this.state.count}</Text> */}
-            <Search
-              style={{borderRadius: '5px'}}
-              loading={this.state.loading}
-              placeholder="Shorten your link"
-              enterButton={this.state.copy ? "Copy" : "Shorten"}
-              size="large"
-              onSearch={this.state.copy ? this.copyLink : this.EnterLink}
-              onChange={() => this.setState({ copy: false })}
-            />
-          </Col>
-        </Row>
+        <div style={{ backgroundColor: "#04142c" }}>
+          <Row
+            justify="center"
+            style={{
+              paddingTop: "30px",
+              paddingBottom: "30px",
+              marginBottom: "30px",
+            }}
+          >
+            <Col xs={17} sm={16} md={16} lg={16} xl={14} xxl={8}>
+              {/* <Text keyboard>Total Links Shortened : {this.state.count}</Text> */}
 
-        <Row justify="center" style={{ paddingBottom: "75px", }}>
-          <Col xs={23} sm={20} md={20} lg={19} xl={18} xxl={17}>
-            <List
-              style={{backgroundColor:'white', borderRadius: '5px'  }}
-              size="medium"
-              bordered
-              dataSource={[...this.state.data].reverse()}
-              renderItem={(item) => (
-                <List.Item
-                  actions={
-                    isMobile()
-                      ? []
-                      : [
-                          <Button
-                            type="primary"
-                            onClick={() => {
-                              notification.destroy();
-                              notification.success({
-                                message: "Successfully Copied",
-                                description: "",
-                                duration: 2,
-                              });
-                              navigator.clipboard.writeText(
-                                item.shorten
-                              );
-                            }}
+              <Input
+                style={{ borderRadius: "5px 0px 0px 5px" }}
+                placeholder="Shorten your link"
+                onChange={(e) => {
+                  this.setState({
+                    input: e.target.value,
+                    copy: false,
+                  });
+                }}
+              />
+            </Col>
 
-                          >
-                            Copy
-                          </Button>,
-                        ]
-                  }
-                >
-                  {isMobile() ? (
-                    <MobileTable item={item} />
-                  ) : (
-                    <Table item={item} />
-                  )}
-                </List.Item>
-              )}
-            />
-          </Col>
-        </Row>
+            <Col xs={6} sm={4} md={4} lg={3} xl={2} xxl={2}>
+              <Button
+                style={{ borderRadius: "0px 5px 5px 0px" }}
+                block
+                type="primary"
+                onClick={this.state.copy ? this.copyLink : this.EnterLink}
+              >
+                {this.state.copy ? (this.state.copied ? "Copied" : "Copy") : "Shorten"}
+
+              </Button>
+            </Col>
+          </Row>
+
+          <Row justify="center" style={{ paddingBottom: "75px" }}>
+            <Col xs={23} sm={20} md={20} lg={19} xl={18} xxl={17}>
+              <List
+                style={{ backgroundColor: "white", borderRadius: "5px" }}
+                size="medium"
+                bordered
+                dataSource={[...this.state.data].reverse()}
+                renderItem={(item) => (
+                  <List.Item
+                    actions={
+                      isMobile()
+                        ? []
+                        : [
+                            <Button
+                              style={{ borderRadius: "5px" }}
+                              type="primary"
+                              onClick={() => {
+                                notification.destroy();
+                                notification.success({
+                                  message: "Successfully Copied",
+                                  description: "",
+                                  duration: 2,
+                                });
+                                navigator.clipboard.writeText(item.shorten);
+                              }}
+                            >
+                              Copy
+                            </Button>,
+                          ]
+                    }
+                  >
+                    {isMobile() ? (
+                      <MobileTable item={item} />
+                    ) : (
+                      <Table item={item} />
+                    )}
+                  </List.Item>
+                )}
+              />
+            </Col>
+          </Row>
         </div>
       </div>
     );
