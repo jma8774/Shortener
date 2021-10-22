@@ -45,14 +45,25 @@ class Home extends React.Component {
       animateCount: false,
     };
   }
-  // This function from React runs when the website is opened
+  
+  // This function runs when the website is opened
   componentDidMount() {
     // Testing GET request
-    axios.get("/api/totalLinks").then((res) => {
-      this.setState({
-        count: res.data.totalLinks,
+    const updateCount = () => {
+      axios.get("/api/totalLinks").then((res) => {
+        this.setState({
+          count: res.data.totalLinks,
+        });
       });
-    });
+    }
+    updateCount()
+    const countUpdateInterval = setInterval(updateCount, 5000)
+    this.setState({countUpdateInterval: countUpdateInterval})
+  }
+  
+  // This function runs when React dies
+  componentWillUnmount() {
+    clearInterval(this.state.countUpdateInterval)
   }
 
   EnterLink = (value) => {
