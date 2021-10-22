@@ -127,13 +127,14 @@ class Home extends React.Component {
   };
 
   copyLink = (value) => {
-    navigator.clipboard.writeText(this.state.data.at(-1).shorten);
+    alert("CALLED")
     notification.destroy();
     notification.success({
       message: "Successfully Copied",
       description: "",
       duration: 2,
     });
+    navigator.clipboard.writeText(this.state.data[this.state.data.length-1].shorten);
     this.setState({
       copied: true
     })
@@ -213,7 +214,7 @@ class Home extends React.Component {
 
               <Input
                 style={{ borderRadius: "5px 0px 0px 5px" }}
-                size={isMobile() ? "medium" : "large"}
+                size="large"
                 placeholder="Shorten your link"
                 onChange={(e) => {
                   this.setState({
@@ -228,7 +229,7 @@ class Home extends React.Component {
             <Col xs={6} sm={4} md={4} lg={3} xl={2} xxl={2}>
               <Button
                 style={{ borderRadius: "0px 5px 5px 0px" }}
-                size={isMobile() ? "medium" : "large"}
+                size="large"
                 block
                 type="primary"
                 loading={this.state.loading}

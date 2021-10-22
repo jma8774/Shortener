@@ -5,8 +5,8 @@ import "../App.css";
 const { Text } = Typography;
 
 function limit(string) {
-  if (string.length > 30) {
-    return string.substring(0, 30) + "...";
+  if (string.length > 37) {
+    return string.substring(0, 37) + "...";
   }
   return string;
 }
