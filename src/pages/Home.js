@@ -127,7 +127,6 @@ class Home extends React.Component {
   };
 
   copyLink = (value) => {
-    alert("CALLED")
     notification.destroy();
     notification.success({
       message: "Successfully Copied",
