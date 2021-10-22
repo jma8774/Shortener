@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { Table, MobileTable } from "../components/Table";
 
 const cookies = new Cookies();
-const { Text, Title } = Typography;
+const { Text, Title, Paragraph } = Typography;
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -143,15 +143,15 @@ class Home extends React.Component {
           innerWidth
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
-            <Title level={2} style={{ textAlign: "left" }}>
-              Shortener
-            </Title>
-            <Title level={3} style={{ textAlign: "left" }}>
+            <div className="titleText">
+              Smallify
+            </div>
+            <div className="paragraphText">
               If you're looking for a link shortener, you've come to the right
               place.
-            </Title>
+            </div>
           </Col>
-          <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={10}>
+          <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={8} style={{marginTop: "50px", marginBottom: "25px"}}>
             <img
               src="/CoverPicture3.svg"
               height="auto"
@@ -164,7 +164,7 @@ class Home extends React.Component {
           justify="center"
           style={{ marginTop: "30px", marginBottom: "30px" }}
         >
-          <Col xs={22} sm={16} md={16} lg={16} xl={12} xxl={8}>
+          <Col xs={23} sm={20} md={16} lg={16} xl={12} xxl={8}>
             <Text keyboard>Total Links Shortened : {this.state.count}</Text>
             <Search
               loading={this.state.loading}

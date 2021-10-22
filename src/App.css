@@ -1,5 +1,34 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&family=Roboto:ital,wght@0,500;0,700;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&family=Open+Sans:wght@700&family=Roboto:ital,wght@0,300;0,500;0,700;1,100&display=swap');
 
 .App {
+  font-family: 'Montserrat', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+  /* font-family: 'Open Sans', sans-serif; */
+  /* font-family: "Times New Roman", Times, serif; */
   text-align: center;
+}
+
+.titleText {
+  text-align: left;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.paragraphText {
+  text-align: left;
+  font-size: 24px;
+  color: #54545c;
+}
+
+@media screen and (max-width: 750px) {
+  /* styles for browsers lower than 750px; */
+  .titleText {
+    font-size: 50px;
+
+  }
+  .paragraphText {
+    font-size: 16px;
+  }
 }
