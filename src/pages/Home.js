@@ -105,6 +105,7 @@ class Home extends React.Component {
           copy: true,
         });
         cookies.set(res.data.shortenLink, value);
+        navigator.clipboard.writeText(res.data.shortenLink);
       });
   };
 
@@ -139,8 +140,9 @@ class Home extends React.Component {
           justify="center"
           align="middle"
           style={{ marginTop: "30px", marginBottom: "30px" }}
+          innerWidth
         >
-          <Col span={6}>
+          <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
             <Title level={2} style={{ textAlign: "left" }}>
               Shortener
             </Title>
@@ -149,11 +151,11 @@ class Home extends React.Component {
               place.
             </Title>
           </Col>
-          <Col span={10}>
+          <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={10}>
             <img
               src="/CoverPicture3.svg"
-              width="800"
-              height="500"
+              height="auto"
+              width="100%"
               alt="test"
             ></img>
           </Col>
@@ -196,7 +198,6 @@ class Home extends React.Component {
                                 description: "",
                                 duration: 2,
                               });
-                              navigator.clipboard.writeText(item.shorten);
                             }}
                           >
                             Copy
