@@ -175,7 +175,9 @@ class Home extends React.Component {
                     {limit(item.destination)}
                   </Text>
                   <Text strong style={{ marginLeft: "auto" }}>
-                    {item.shorten}
+                    <a href={item.shorten} target="_blank" rel="noreferrer">
+                      {item.shorten}
+                    </a>
                   </Text>
                 </div>
               </List.Item>
