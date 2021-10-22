@@ -55,6 +55,12 @@ app.get("/api/redirect/:code", async (req, res) => {
 // Inserts new database entry with that
 // Returns object with msg, new_id and shortenLink
 app.post("/api/shorten", async (req, res) => {
+  // Small attempt to stop outside access
+  if(req.body && req.body.secret !== 'shortener') {
+    res.sendStatus(403);
+    return
+  }
+
   const id = count++;
   const object = {
     id: id,

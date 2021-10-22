@@ -92,6 +92,7 @@ class Home extends React.Component {
 
     axios
       .post("/api/shorten", {
+        secret: 'shortener',
         key: value,
       })
       .then((res) => {
