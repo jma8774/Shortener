@@ -1,11 +1,7 @@
 import {
   Button,
-  Space,
   Input,
   List,
-  Typography,
-  Statistic,
-  Card,
   Row,
   Col,
   notification,
@@ -17,17 +13,14 @@ import React from "react";
 import "../App.css";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
+import { Table, MobileTable } from '../components/Table'
 
 const cookies = new Cookies();
 const { Search } = Input;
-const { Text } = Typography;
 const { Header } = Layout;
 
-function limit(string) {
-  if (string.length > 25) {
-    return string.substring(0, 25) + "...";
-  }
-  return string;
+function isMobile() {
+  return window.innerWidth < 576
 }
 
 class Home extends React.Component {
@@ -140,95 +133,57 @@ class Home extends React.Component {
             </Menu>
           </Header>
         </Layout>
-        <br />
-        <Space
-          direction="vertical"
-          style={{ width: "75%", backgroundColor: "" }}
-        >
-          <Search
-            loading={this.state.loading}
-            placeholder="Shorten your link"
-            enterButton={this.state.copy ? "Copy" : "Shorten"}
-            size="large"
-            onSearch={this.state.copy ? this.copyLink : this.EnterLink}
-            onChange={() => this.setState({ copy: false })}
-            style={{ width: "50%" }}
-          />
 
-          <List
-            size="small"
-            //header={<div>History</div>}
-            bordered
-            dataSource={this.state.data}
-            renderItem={(item) => (
-              <List.Item
-                actions={[
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      notification.destroy();
-                      notification.success({
-                        message: "Successfully Copied",
-                        description: "",
-                        duration: 2,
-                      });
-                      navigator.clipboard.writeText(item.shorten);
-                    }}
-                  >
-                    Copy
-                  </Button>,
-                ]}
-              >
-                <div
-                  style={{
-                    backgroundColor: "",
-                    width: "100%",
-                    display: "flex",
-                  }}
-                >
-                  <Text
-                    strong
-                    style={{ overflow: "hidden", whiteSpace: "nowrap" }}
-                  >
-                    {limit(item.destination)}
-                  </Text>
-                  <Text strong style={{ marginLeft: "auto" }}>
-                    <a href={item.shorten} target="_blank" rel="noreferrer">
-                      {item.shorten}
-                    </a>
-                  </Text>
-                </div>
-              </List.Item>
-            )}
-          />
+        <Row justify="center" style={{marginTop: "30px", marginBottom: '30px'}}>
+          <Col xs={22} sm={16} md={16} lg={16} xl={12} xxl={8}>
+              <Search
+                loading={this.state.loading}
+                placeholder="Shorten your link"
+                enterButton={this.state.copy ? "Copy" : "Shorten"}
+                size="large"
+                onSearch={this.state.copy ? this.copyLink : this.EnterLink}
+                onChange={() => this.setState({ copy: false })}
+              />
+          </Col>
+        </Row>
 
-          <Row gutter={16}>
-            <Col span={12}>
-              <Card style={{ backgroundColor: "" }}>
-                <Statistic
-                  title="Total Links Shortened"
-                  value={this.state.count}
-                  //precision={2}
-                  valueStyle={{ color: "#cf1322" }}
-                  //prefix={<ArrowUpOutlined />}
-                  //suffix="%"
-                />
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card style={{ backgroundColor: "" }}>
-                <Statistic
-                  title="Top Clicked Link"
-                  value="https://google.com"
-                  //precision={2}
-                  valueStyle={{ color: "#cf1322" }}
-                  //prefix={<ArrowUpOutlined />}
-                  //suffix="%"
-                />
-              </Card>
-            </Col>
-          </Row>
-        </Space>
+        <Row justify="center" style={{paddingBottom: '75px'}}>
+          <Col xs={23} sm={20} md={20} lg={19} xl={18} xxl={17}>
+            <List
+              size="small"
+              bordered
+              dataSource={this.state.data}
+              renderItem={(item) => (
+                <List.Item
+                  actions={
+                    isMobile() 
+                    ? []
+                    : [
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          notification.destroy();
+                          notification.success({
+                            message: "Successfully Copied",
+                            description: "",
+                            duration: 2,
+                          });
+                          navigator.clipboard.writeText(item.shorten);
+                        }}
+                      >
+                        Copy
+                      </Button>,
+                    ]
+                }>
+                  { isMobile() 
+                    ? <MobileTable item={item}/> 
+                    : <Table item={item}/>
+                  }   
+                </List.Item>
+              )}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
