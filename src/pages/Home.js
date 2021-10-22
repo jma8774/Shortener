@@ -9,15 +9,19 @@ import {
   Row,
   Col,
   notification,
+  Layout,
+  Menu,
 } from "antd";
 import axios from "axios";
 import React from "react";
 import "../App.css";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
 const cookies = new Cookies();
 const { Search } = Input;
 const { Text } = Typography;
+const { Header } = Layout;
 
 function limit(string) {
   if (string.length > 25) {
@@ -92,7 +96,7 @@ class Home extends React.Component {
 
     axios
       .post("/api/shorten", {
-        secret: 'shortener',
+        secret: "shortener",
         key: value,
       })
       .then((res) => {
@@ -122,6 +126,20 @@ class Home extends React.Component {
   render() {
     return (
       <div className="App">
+        <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" selectedKeys={[null]}>
+              <Menu.Item key="1">
+                <Link to="/">Home</Link>
+              </Menu.Item>
+
+              <Menu.Item key="2">
+                <Link to="/About">About</Link>
+              </Menu.Item>
+            </Menu>
+          </Header>
+        </Layout>
         <br />
         <Space
           direction="vertical"
