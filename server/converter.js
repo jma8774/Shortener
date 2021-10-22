@@ -37,6 +37,9 @@ function decode(id) {
 
 // Convert base 10 int to base 26 array
 function decToBaseLowercase(id) {
+  if(id == 0)
+    return [0]
+
   let digits = []
   let remainder = 0
   while(id > 0) {
