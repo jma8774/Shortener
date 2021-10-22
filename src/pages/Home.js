@@ -141,7 +141,7 @@ class Home extends React.Component {
           style={{ marginTop: "30px", marginBottom: "30px" }}
         >
           <Col span={6}>
-            <Title level={2} style={{ textAlign: "left" }} >
+            <Title level={2} style={{ textAlign: "left" }}>
               Shortener
             </Title>
             <Title level={3} style={{ textAlign: "left" }}>
@@ -180,7 +180,7 @@ class Home extends React.Component {
             <List
               size="small"
               bordered
-              dataSource={this.state.data}
+              dataSource={[...this.state.data].reverse()}
               renderItem={(item) => (
                 <List.Item
                   actions={
