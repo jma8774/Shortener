@@ -118,7 +118,7 @@ class Home extends React.Component {
           copy: true,
           animateCount: true,
         });
-        setTimeout(() => this.setState({animateCount: false}), 1000);
+        setTimeout(() => this.setState({animateCount: false}), 800);
         cookies.set(res.data.shortenLink, value);
         
       });

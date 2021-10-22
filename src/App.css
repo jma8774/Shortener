@@ -34,7 +34,7 @@
 }
 
 .animateCount {
-  animation-duration: 1s;
+  animation-duration: .8s;
   animation-name: slidein;
 }
 
@@ -44,7 +44,7 @@
     opacity: 1;
   }
   to {
-    transform: translate(0px, -50px);
+    transform: translate(0px, -30px);
     opacity: 0;
   }
 }
