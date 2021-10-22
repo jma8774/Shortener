@@ -32,3 +32,19 @@
     font-size: 16px;
   }
 }
+
+.animateCount {
+  animation-duration: 1s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    transform: translate(0px, 0px);
+    opacity: 1;
+  }
+  to {
+    transform: translate(0px, -50px);
+    opacity: 0;
+  }
+}

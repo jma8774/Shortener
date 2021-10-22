@@ -1,8 +1,12 @@
 import React from "react";
 import "../App.css";
-import { Button, Input, List, Row, Col, Layout, Menu } from "antd";
+import { Button, Input, List, Row, Col, Layout, Menu, Divider } from "antd";
 import { RiseOutlined, CheckOutlined, StarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+
+function isMobile() {
+  return window.innerWidth < 768;
+}
 
 const { Header } = Layout;
 
@@ -44,7 +48,7 @@ class About extends React.Component {
             lg={10}
             xl={8}
             xxl={6}
-            style={{ marginLeft: "0px" }}
+            style={isMobile() ? {marginTop: '40px'} : {}}
           >
             <div className="titleText">Why Smallify?</div>
             <div className="paragraphText">
@@ -57,7 +61,7 @@ class About extends React.Component {
         <Row
           justify="center"
           align="middle"
-          style={{ marginTop: "50px", marginBottom: "50px" }}
+          style={{ marginTop: "50px", paddingBottom: "100px" }}
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
             <div className="titleText">The Team</div>

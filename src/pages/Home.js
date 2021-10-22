@@ -8,6 +8,7 @@ import {
   Layout,
   Menu,
   Typography,
+  Divider
 } from "antd";
 import axios from "axios";
 import React from "react";
@@ -45,7 +46,7 @@ class Home extends React.Component {
       animateCount: false,
     };
   }
-  
+
   // This function runs when the website is opened
   componentDidMount() {
     // Testing GET request
@@ -160,9 +161,9 @@ class Home extends React.Component {
               Smallify
             </div>
             <div className="paragraphText">
-              If you're looking for a link shortener, you've come to the right place. We've shortened a total of 
+              If you're looking for a link shortener, you've come to the right place. We've shortened a total of
               { this.state.animateCount
-              ? <span style={{color: '#078476'}}> +1 </span> 
+              ? <div className="animateCount" style={{color: '#6ccc34', display: 'inline-block'}}>&nbsp;+1&nbsp;</div> 
               : <span style={{color: '#1890ff'}}> {this.state.count} </span> 
               }
               links!
@@ -177,13 +178,15 @@ class Home extends React.Component {
             ></img>
           </Col>
         </Row>
+        <div style={{backgroundColor:'#04142c'}}>
         <Row
           justify="center"
-          style={{ marginTop: "30px", marginBottom: "30px" }}
+          style={{ paddingTop: "30px", paddingBottom: "30px", marginBottom: '30px'}}
         >
           <Col xs={23} sm={20} md={16} lg={16} xl={12} xxl={8}>
             {/* <Text keyboard>Total Links Shortened : {this.state.count}</Text> */}
             <Search
+              style={{borderRadius: '5px'}}
               loading={this.state.loading}
               placeholder="Shorten your link"
               enterButton={this.state.copy ? "Copy" : "Shorten"}
@@ -194,10 +197,11 @@ class Home extends React.Component {
           </Col>
         </Row>
 
-        <Row justify="center" style={{ paddingBottom: "75px" }}>
+        <Row justify="center" style={{ paddingBottom: "75px", }}>
           <Col xs={23} sm={20} md={20} lg={19} xl={18} xxl={17}>
             <List
-              size="small"
+              style={{backgroundColor:'white', borderRadius: '5px'  }}
+              size="medium"
               bordered
               dataSource={[...this.state.data].reverse()}
               renderItem={(item) => (
@@ -236,6 +240,7 @@ class Home extends React.Component {
             />
           </Col>
         </Row>
+        </div>
       </div>
     );
   }
