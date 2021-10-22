@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import { Button, Input, List, Row, Col, Layout, Menu, Divider } from "antd";
-import { RiseOutlined, CheckOutlined, StarOutlined } from "@ant-design/icons";
+import { DashboardTwoTone, SmileTwoTone, StopTwoTone} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 function isMobile() {
@@ -51,10 +51,10 @@ class About extends React.Component {
             style={isMobile() ? {marginTop: '40px'} : {}}
           >
             <div className="titleText">Why Smallify?</div>
-            <div className="paragraphText" style={{fontSize: "16px"}}>
-              <RiseOutlined /> Quick <br />
-              <CheckOutlined /> Easy <br />
-              <StarOutlined /> No Ads <br />
+            <div className="paragraphText" style={{fontSize: "18px"}}>
+              <SmileTwoTone /> Easy <br />
+              <DashboardTwoTone twoToneColor="#52c41a"/> Links never expire <br />
+              <StopTwoTone twoToneColor="#eb2f96"/> No Ads <br />
             </div>
           </Col>
         </Row>
@@ -65,7 +65,7 @@ class About extends React.Component {
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
             <div className="titleText">The Team</div>
-            <div className="paragraphText" style={{fontSize: "16px"}}>
+            <div className="paragraphText" style={{fontSize: "18px"}}>
               Person 1 <br />
               Person 2 <br />
             </div>
