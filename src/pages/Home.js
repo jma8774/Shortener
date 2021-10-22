@@ -105,7 +105,7 @@ class Home extends React.Component {
           copy: true,
         });
         cookies.set(res.data.shortenLink, value);
-        navigator.clipboard.writeText(res.data.shortenLink);
+        
       });
   };
 
@@ -198,7 +198,11 @@ class Home extends React.Component {
                                 description: "",
                                 duration: 2,
                               });
+                              navigator.clipboard.writeText(
+                                item.shorten
+                              );
                             }}
+
                           >
                             Copy
                           </Button>,
