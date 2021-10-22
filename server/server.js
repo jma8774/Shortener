@@ -21,19 +21,6 @@ app.use(cors());
 // Middleware to debug requests
 app.use(morgan("tiny"));
 
-// This displays message that the server running and listening to specified port
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-// Needed for Heroku
-if (process.env.NODE_ENV === 'production') {
-  const buildPath = path.join(__dirname, '..', 'build');
-  app.use(express.static(buildPath));
-  // all unknown routes should be handed to our react app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
-  });
-}
-
 // This count will keep track of the number of items in our db, not initialized = -1
 let count = -1;
 
@@ -87,3 +74,15 @@ app.get('/api/totalLinks', async (req, res) =>{
     totalLinks: count
   });
 });
+
+// Needed for Heroku
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+  // all unknown routes should be handed to our react app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
+
+// This displays message that the server running and listening to specified port
+app.listen(port, () => console.log(`Listening on port ${port}`));
