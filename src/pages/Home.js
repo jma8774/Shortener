@@ -42,7 +42,6 @@ class Home extends React.Component {
       error: false,
       loading: false,
       copy: false,
-      animateCount: false,
     };
   }
   // This function from React runs when the website is opened
@@ -104,11 +103,8 @@ class Home extends React.Component {
           count: this.state.count + 1,
           loading: false,
           copy: true,
-          animateCount: true,
         });
-        setTimeout(() => this.setState({animateCount: false}), 1000);
         cookies.set(res.data.shortenLink, value);
-        
       });
   };
 
@@ -127,37 +123,40 @@ class Home extends React.Component {
       <div className="App">
         <Layout className="layout">
           <Header>
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" selectedKeys={[null]}>
-              <Menu.Item key="1">
-                <Link to="/">Home</Link>
-              </Menu.Item>
+            <div className="logo"></div>
+              <Menu theme="dark" mode="horizontal" selectedKeys={[null]}>
+                <Menu.Item key="1">
+                  <Link to="/">Home</Link>
+                </Menu.Item>
 
-              <Menu.Item key="2">
-                <Link to="/About">About</Link>
-              </Menu.Item>
-            </Menu>
+                <Menu.Item key="2">
+                  <Link to="/About">About</Link>
+                </Menu.Item>
+              </Menu>
           </Header>
         </Layout>
         <Row
           justify="center"
           align="middle"
           style={{ marginTop: "30px", marginBottom: "30px" }}
+          innerWidth
         >
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
-            <div className="titleText">
-              Smallify
-            </div>
+            <div className="titleText">Smallify</div>
             <div className="paragraphText">
-              If you're looking for a link shortener, you've come to the right place. We've shortened a total of 
-              { this.state.animateCount
-              ? <span style={{color: '#078476'}}> +1 </span> 
-              : <span style={{color: '#1890ff'}}> {this.state.count} </span> 
-              }
-              links!
+              If you're looking for a link shortener, you've come to the right
+              place.
             </div>
           </Col>
-          <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={8} style={{marginTop: "50px", marginBottom: "25px"}}>
+          <Col
+            xs={22}
+            sm={16}
+            md={16}
+            lg={10}
+            xl={10}
+            xxl={8}
+            style={{ marginTop: "50px", marginBottom: "25px" }}
+          >
             <img
               src="/CoverPicture3.svg"
               height="auto"
@@ -171,7 +170,7 @@ class Home extends React.Component {
           style={{ marginTop: "30px", marginBottom: "30px" }}
         >
           <Col xs={23} sm={20} md={16} lg={16} xl={12} xxl={8}>
-            {/* <Text keyboard>Total Links Shortened : {this.state.count}</Text> */}
+            <Text keyboard>Total Links Shortened : {this.state.count}</Text>
             <Search
               loading={this.state.loading}
               placeholder="Shorten your link"
@@ -204,11 +203,8 @@ class Home extends React.Component {
                                 description: "",
                                 duration: 2,
                               });
-                              navigator.clipboard.writeText(
-                                item.shorten
-                              );
+                              navigator.clipboard.writeText(item.shorten);
                             }}
-
                           >
                             Copy
                           </Button>,
