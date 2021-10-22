@@ -1,10 +1,6 @@
 import {
   Button,
-  Slider,
   Space,
-  Upload,
-  Popconfirm,
-  Popover,
   Input,
   List,
   Typography,
@@ -14,7 +10,6 @@ import {
   Col,
   notification,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React from "react";
 import "../App.css";
@@ -23,13 +18,6 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const { Search } = Input;
 const { Text } = Typography;
-
-const popContent = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
-  </div>
-);
 
 function limit(string) {
   if (string.length > 25) {
@@ -61,7 +49,6 @@ class Home extends React.Component {
   componentDidMount() {
     // Testing GET request
     axios.get("/api/totalLinks").then((res) => {
-      console.log(res)
       this.setState({
         count: res.data.totalLinks,
       });
