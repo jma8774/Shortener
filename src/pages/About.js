@@ -75,7 +75,7 @@ class About extends React.Component {
                 <Linker href="https://www.linkedin.com/in/jma8774/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
               </div>
               <div style={{marginBottom: '50px'}}>
-                <Avatar size="large" icon={<UserOutlined/>}/> &nbsp;  Brian Cheung 
+                <Avatar size="large" src="/Brian.png"/> &nbsp;  Brian Cheung 
                 <Divider type="vertical"/> 
                 <Linker href="https://github.com/BrianCheung1" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker>
                 <Linker href="https://www.linkedin.com/in/brian-cheung-a82a191a3/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
