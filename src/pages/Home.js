@@ -152,7 +152,7 @@ class Home extends React.Component {
               </Menu.Item>
 
               <Menu.Item key="2">
-                <Link to="/About">About</Link>
+                <Link to="/about">About</Link>
               </Menu.Item>
             </Menu>
           </Header>

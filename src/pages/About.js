@@ -24,7 +24,7 @@ class About extends React.Component {
                 <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/About">About</Link>
+                <Link to="/about">About</Link>
               </Menu.Item>
             </Menu>
           </Header>
