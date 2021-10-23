@@ -79,7 +79,7 @@ class About extends React.Component {
                 </Tooltip>
               </div>
               <div style={{marginBottom: '50px'}}>
-                <Avatar size="large" src="/Brian.png"/> &nbsp;  Brian Cheung 
+                <Avatar size="large" src="/brian.png"/> &nbsp;  Brian Cheung 
                 <Divider type="vertical"/> 
                 <Tooltip placement="top" title="Open GitHub Page"> 
                   <Linker href="https://github.com/BrianCheung1" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker> 
