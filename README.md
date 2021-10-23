@@ -12,4 +12,10 @@ Basic diagram overview of the app can be found [here](https://drive.google.com/f
 # Features
 Users will be able to put in any link that they want and we will shorten it and return the shortened link. All links are saved as cookies for future use.
 
+😄 Easy To Use
+
+⏲ Links Never Expire
+
+⛔ No Ads
+
 ![](https://i.imgur.com/lucF20t.png)
