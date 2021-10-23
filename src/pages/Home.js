@@ -219,6 +219,7 @@ class Home extends React.Component {
                   this.setState({
                     input: e.target.value,
                     copy: false,
+                    copied: false,
                   });
                 }}
                 onPressEnter={this.state.copy ? this.copyLink : this.EnterLink}

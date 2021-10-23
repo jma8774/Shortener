@@ -54,8 +54,8 @@ class About extends React.Component {
           >
             <div className="titleText">Why Smallify?</div>
             <div className="paragraphText" style={{fontSize: "18px"}}>
-              <SmileTwoTone /> Easy <br />
-              <DashboardTwoTone twoToneColor="#52c41a"/> Links never expire <br />
+              <SmileTwoTone /> Easy To Use<br />
+              <DashboardTwoTone twoToneColor="#52c41a"/> Links Never Expire <br />
               <StopTwoTone twoToneColor="#eb2f96"/> No Ads <br />
             </div>
           </Col>
