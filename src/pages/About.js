@@ -1,8 +1,10 @@
 import React from "react";
 import "../App.css";
-import { Button, Input, List, Row, Col, Layout, Menu, Divider } from "antd";
-import { DashboardTwoTone, SmileTwoTone, StopTwoTone} from "@ant-design/icons";
+import { Row, Col, Layout, Menu, Avatar, Divider , Typography } from "antd";
+import { DashboardTwoTone, SmileTwoTone, StopTwoTone, GithubFilled, LinkedinFilled, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+
+const Linker = Typography.Link
 
 function isMobile() {
   return window.innerWidth < 768;
@@ -66,8 +68,18 @@ class About extends React.Component {
           <Col xs={20} sm={16} md={16} lg={10} xl={8} xxl={6}>
             <div className="titleText">The Team</div>
             <div className="paragraphText" style={{fontSize: "18px"}}>
-              Person 1 <br />
-              Person 2 <br />
+              <div style={{marginTop: '10px', marginBottom: '10px'}}>
+                <Avatar size="large" src="/jiaming.jpg"/> &nbsp; Jia Ming Ma 
+                <Divider type="vertical"/> 
+                <Linker href="https://github.com/jma8774" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker>
+                <Linker href="https://www.linkedin.com/in/jma8774/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
+              </div>
+              <div style={{marginBottom: '50px'}}>
+                <Avatar size="large" icon={<UserOutlined/>}/> &nbsp;  Brian Cheung 
+                <Divider type="vertical"/> 
+                <Linker href="https://github.com/BrianCheung1" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker>
+                <Linker href="https://www.linkedin.com/in/brian-cheung-a82a191a3/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
+              </div>
             </div>
           </Col>
           <Col xs={22} sm={16} md={16} lg={10} xl={10} xxl={8}>
