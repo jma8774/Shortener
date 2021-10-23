@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import { Row, Col, Layout, Menu, Avatar, Divider , Typography } from "antd";
+import { Row, Col, Layout, Menu, Avatar, Divider , Typography, Tooltip } from "antd";
 import { DashboardTwoTone, SmileTwoTone, StopTwoTone, GithubFilled, LinkedinFilled, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -71,14 +71,22 @@ class About extends React.Component {
               <div style={{marginTop: '10px', marginBottom: '10px'}}>
                 <Avatar size="large" src="/jiaming.jpg"/> &nbsp; Jia Ming Ma 
                 <Divider type="vertical"/> 
-                <Linker href="https://github.com/jma8774" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker>
-                <Linker href="https://www.linkedin.com/in/jma8774/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
+                <Tooltip placement="top" title="Open GitHub Page"> 
+                  <Linker href="https://github.com/jma8774" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker> 
+                </Tooltip>
+                <Tooltip placement="top" title="Open LinkedIn Page"> 
+                  <Linker href="https://www.linkedin.com/in/jma8774/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker> 
+                </Tooltip>
               </div>
               <div style={{marginBottom: '50px'}}>
                 <Avatar size="large" icon={<UserOutlined/>}/> &nbsp;  Brian Cheung 
                 <Divider type="vertical"/> 
-                <Linker href="https://github.com/BrianCheung1" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker>
-                <Linker href="https://www.linkedin.com/in/brian-cheung-a82a191a3/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker>
+                <Tooltip placement="top" title="Open GitHub Page"> 
+                  <Linker href="https://github.com/BrianCheung1" target="_blank" style={{color:'black'}}> <GithubFilled /> </Linker> 
+                </Tooltip>
+                <Tooltip placement="top" title="Open LinkedIn Page"> 
+                  <Linker href="https://www.linkedin.com/in/brian-cheung-a82a191a3/" target="_blank" style={{color:'black'}}> <LinkedinFilled/> </Linker> 
+                </Tooltip>
               </div>
             </div>
           </Col>
