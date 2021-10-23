@@ -5,7 +5,7 @@ Full stack link shortener app made with React, Express and MongoDB.
 - [Jia Ming Ma](https://github.com/jma8774)
 - [Brian Cheung](https://github.com/BrianCheung1)
 
-🔍View the website [here](https://shortify.xyz/) or [here](https://url-shortener-fun.herokuapp.com/).
+🔍View the website [here](http://www.smallify.xyz/) or [here](https://url-shortener-fun.herokuapp.com/).
 
 Basic diagram overview of the app can be found [here](https://drive.google.com/file/d/12nr24QHdmEd78tO299kAu5kyK_z2iuGc/view?usp=sharing).
 
